@@ -1,21 +1,9 @@
-require('dotenv').config();
-const express =require('express');
-const mongoose =require('mongoose');
-const cors = require('cors');
-const recipesRouter = require('./controllers/recipes');
+const app =require('./app')
+const http =require('http')
+const config =require('./utilis/config')
+const logger = require('./utilis/logger')
 
-const app = express();
-const PORT =process.env.PORT// 3000;
-
-mongoose.connect(process.env.MONGO_URL)
-.then(()=>console.log('Connected to mongoDB'))
-.catch(err =>console.error('mongoDB connection error:',err)
-);
-
-app.use(cors());
-app.use(express.json());
-
-app.use('/api/recipes,' recipesRouter);
-app.listen(PORT, () =>{
-  conasole.log('server running on port ${PORT'}
-);
+const server = http.createServer(app)
+server.listen(config.PORT,() =>{
+  logger.info('Server running on port${config.PORT}')
+} )
